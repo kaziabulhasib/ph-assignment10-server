@@ -7,7 +7,18 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // middleware
-app.use(cors());
+// app.use(cors());-- comment out on instruction , for fetching data vercel
+const corsConfig = {
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://asg10-type02.web.app",
+  ],
+
+  credentials: true,
+};
+app.use(cors(corsConfig));
+
 app.use(express.json());
 
 // mongo
