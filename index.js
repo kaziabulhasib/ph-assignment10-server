@@ -42,7 +42,7 @@ async function run() {
     const itemCollection = database.collection("items");
 
     app.get("/items", async (req, res) => {
-      const cursor = itemCollection.find().limit(6);
+      const cursor = itemCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
@@ -58,6 +58,15 @@ async function run() {
       const item = req.body;
       console.log("new item", item);
       const result = await itemCollection.insertOne(item);
+      res.send(result);
+    });
+
+    // myCraft item data :
+    app.get("/mycraft/:email", async (req, res) => {
+      console.log(req.params.email);
+      const result = await itemCollection
+        .find({ email: req.params.email })
+        .toArray();
       res.send(result);
     });
 
