@@ -7,17 +7,17 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // middleware
-// app.use(cors());-- comment out on instruction , for fetching data vercel
-const corsConfig = {
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "https://asg10-type02.web.app",
-  ],
+app.use(cors());
+// const corsConfig = {
+//   origin: [
+//     "http://localhost:5173",
+//     "http://localhost:5174",
+//     "https://asg10-type02.web.app",
+//   ],
 
-  credentials: true,
-};
-app.use(cors(corsConfig));
+//   credentials: true,
+// };
+// app.use(cors(corsConfig));
 
 app.use(express.json());
 
@@ -76,6 +76,14 @@ async function run() {
         .find({ email: req.params.email })
         .toArray();
       res.send(result);
+    });
+
+    // update items data ----
+    app.get("/update/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const item = await itemCollection.findOne(query);
+      res.send(item);
     });
 
     // Send a ping to confirm a successful connection
