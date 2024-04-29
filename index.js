@@ -61,6 +61,14 @@ async function run() {
       res.send(result);
     });
 
+    // delete operation--
+    app.delete("/items/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await itemCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // myCraft item data :
     app.get("/mycraft/:email", async (req, res) => {
       console.log(req.params.email);
