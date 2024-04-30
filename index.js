@@ -78,14 +78,39 @@ async function run() {
       res.send(result);
     });
 
-    // update items data ----
+    // update item  find----
     app.get("/update/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const item = await itemCollection.findOne(query);
       res.send(item);
     });
+    // update item Update
 
+    app.put("/update/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const data = {
+        $set: {
+          //
+          itemName: req.body.itemName,
+          imageUrl: req.body.imageUrl,
+          subcategory: req.body.subcategory,
+          description: req.body.description,
+          price: req.body.price,
+          rating: req.body.rating,
+          customization: req.body.customization,
+          stock: req.body.stock,
+          userName: req.body.userName,
+          email: req.body.email,
+          processingTime: req.body.processingTime,
+
+          //
+        },
+      };
+      const result = await itemCollection.updateOne(query, data);
+      res.send(result);
+    });
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 }); --- commented out as per inturction
     console.log(
